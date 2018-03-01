@@ -2,9 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>otus js, hw1</title>
 </head>
 <body>
-$END$
+<script>
+    'use strict';
+
+    /**
+     * Функция суммирования значений
+     * @param {array} arr - массив значений
+     */
+
+    const sum = (arr) => {
+        let acc = 0;
+        for(let i = 0; i < arr.length; i++) {
+            acc += arr[i];
+        }
+        return acc;
+    };
+
+    console.log(sum([1,2,3,4]));
+
+</script>
 </body>
 </html>

@@ -21,7 +21,19 @@
         return acc;
     };
 
-    console.log(sum([1,2,3,4]));
+    let arr1 = [1,2,3,4];
+
+    console.log("Сумма значеий массива [" + arr1 + "] = " + sum(arr1));
+
+    // попользуем прототипное наследование
+
+    Array.prototype.summ = function(){
+        return sum(this);
+    };
+
+    let arr2 = [1,2,3,4,5];
+
+    console.log("Сумма значеий массива [" + arr2 + "] = " + arr2.summ());
 
 </script>
 </body>

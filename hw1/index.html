@@ -6,34 +6,46 @@
 </head>
 <body>
 <script>
-    'use strict';
 
     /**
-     * Функция суммирования значений
-     * @param {array} arr - массив значений
+     * Функция суммирования значений при помощи каррирования
+     * @param n
+     * @returns {function} innerSum
      */
 
-    const sum = (arr) => {
-        let acc = 0;
-        for(let i = 0; i < arr.length; i++) {
-            acc += arr[i];
+    function sum(n) {
+
+        let sum = n; // сумма в замыкании
+
+        /**
+         * Внутренняя функция сумматор
+         * @param b
+         * @returns {number} summ (если вызывается без аргумента)
+         * @returns {function} innerSum (при наличии аргумента)
+         */
+
+        function innerSum (b) {
+            if (b) {
+                sum += b;
+                return innerSum;
+            } else {
+                return sum;
+            }
         }
-        return acc;
-    };
 
-    let arr1 = [1,2,3,4];
+        return innerSum;
+    }
 
-    console.log("Сумма значеий массива [" + arr1 + "] = " + sum(arr1));
+    // проверка работы функции
+    let s1 = sum(1)(2)(3)(4)(); // 10
+    let s2 = sum(10)(2)(3)(4)(); // 19
+    let s3 = sum(10)(2)(3)(4)(-19)(); // 0
+    console.log(s1 + "\n" + s2 + "\n" + s3);
 
-    // попользуем прототипное наследование
+    /**
+     * Object.create(); - не понял суть задания, прошу, по возможности, "разжевать" (
+     */
 
-    Array.prototype.summ = function(){
-        return sum(this);
-    };
-
-    let arr2 = [1,2,3,4,5];
-
-    console.log("Сумма значеий массива [" + arr2 + "] = " + arr2.summ());
 
 </script>
 </body>

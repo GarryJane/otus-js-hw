@@ -25,7 +25,7 @@
          */
 
         function innerSum (b) {
-            if (b) {
+            if (b || b == 0) {
                 sum += b;
                 return innerSum;
             } else {
@@ -37,7 +37,7 @@
     }
 
     // проверка работы функции
-    let s1 = sum(1)(2)(3)(4)(); // 10
+    let s1 = sum(0)(2)(3)(4)(); // 10
     let s2 = sum(10)(2)(3)(4)(); // 19
     let s3 = sum(10)(2)(3)(4)(-19)(); // 0
     console.log(s1 + "\n" + s2 + "\n" + s3);

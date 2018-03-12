@@ -6,6 +6,7 @@
 </head>
 <body>
 <script>
+    'use strict';
 
     /**
      * Функция суммирования значений при помощи каррирования
@@ -15,7 +16,7 @@
 
     function sum(n) {
         let summ = n; // сумма в замыкании
-        return (sum.arguments.length) ? innerSum : 0; // на случай вызова sum() без агрумента;
+        return (arguments.length) ? innerSum : 0; // на случай вызова sum() без агрумента;
 
         /**
          * Внутренняя функция сумматор
@@ -25,7 +26,7 @@
          */
 
         function innerSum(b) {
-            if (innerSum.arguments.length) {
+            if (arguments.length) {
                 summ += b;
                 return innerSum;
             }
@@ -34,7 +35,7 @@
     }
 
     // проверка работы функции
-    let s1 = sum(0)(2)(3)(4)(); // 10
+    let s1 = sum(0)(2)(3)(4)(1)(); // 10
     let s2 = sum(10)(2)(3)(4)(); // 19
     let s3 = sum(10)(2)(3)(4)(-19)(); // 0
     let s4 = sum(); // 0
@@ -64,11 +65,10 @@
      */
 
     function createObject(protoObj) {
-        let newObj = {};
         for (let index in protoObj) {
-            newObj[index] = protoObj[index];
+            Object.prototype[index] = protoObj[index];
         }
-        return newObj;
+        return Object();
     }
 
     // Использую существующий метод для сравнения

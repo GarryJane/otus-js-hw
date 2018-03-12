@@ -6,47 +6,75 @@
 </head>
 <body>
 <script>
-
+    'use strict';
     /**
      * Функция суммирования значений при помощи каррирования
      * @param n
      * @returns {function} innerSum
      */
-
     function sum(n) {
-
-        let sum = n; // сумма в замыкании
-
+        let summ = n; // сумма в замыкании
+        return (arguments.length) ? innerSum : 0; // на случай вызова sum() без агрумента;
         /**
          * Внутренняя функция сумматор
          * @param b
          * @returns {number} summ (если вызывается без аргумента)
          * @returns {function} innerSum (при наличии аргумента)
          */
-
-        function innerSum (b) {
-            if (b) {
-                sum += b;
+        function innerSum(b) {
+            if (arguments.length) {
+                summ += b;
                 return innerSum;
-            } else {
-                return sum;
             }
+            return summ;
         }
-
-        return innerSum;
     }
-
     // проверка работы функции
-    let s1 = sum(1)(2)(3)(4)(); // 10
+    let s1 = sum(0)(2)(3)(4)(1)(); // 10
     let s2 = sum(10)(2)(3)(4)(); // 19
     let s3 = sum(10)(2)(3)(4)(-19)(); // 0
-    console.log(s1 + "\n" + s2 + "\n" + s3);
-
+    let s4 = sum(); // 0
+    console.log(`${s1}\n${s2}\n${s3}\n${s4}\n`);
     /**
-     * Object.create(); - не понял суть задания, прошу, по возможности, "разжевать" (
+     * Написать функцию аналог Object.create();
      */
-
-
+    /**
+     * Объект-прототип
+     * @type {{name: string, height: number, weight: number, seyMyParams: robot.seyMyParams}}
+     */
+    const robot = {
+        name: '',
+        height: 0,
+        weight: 0,
+        seyMyParams: function () {
+            console.log(`I'm robot ${this.name}. My height: ${this.height}cm, my weight: ${this.weight}kg`);
+        }
+    };
+    /**
+     * Функция возвращает объект, наследующий свойства и методы объекта-прототипа
+     * @param protoObj
+     * @returns {Object}
+     */
+    function createObject(protoObj) {
+        for (let index in protoObj) {
+            Object.prototype[index] = protoObj[index];
+        }
+        return Object();
+    }
+    // Использую существующий метод для сравнения
+    let robotWalker = Object.create(robot);
+    console.log(robotWalker);
+    robotWalker.name = 'Walker';
+    robotWalker.height = 150;
+    robotWalker.weight = 40;
+    // проверка работы функции
+    let robotFighter = createObject(robot);
+    console.log(robotFighter);
+    robotFighter.name = 'Fighter';
+    robotFighter.height = 300;
+    robotFighter.weight = 500;
+    robotWalker.seyMyParams();
+    robotFighter.seyMyParams();
 </script>
 </body>
 </html>

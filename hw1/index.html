@@ -65,13 +65,11 @@
      */
 
     function createObject(protoObj) {
-        function NewObj() {
+        return new function() {
             for (let index in protoObj) {
                 this.__proto__[index] = protoObj[index];
             }
         }
-
-        return new NewObj();
     }
 
     // Использую существующий метод для сравнения

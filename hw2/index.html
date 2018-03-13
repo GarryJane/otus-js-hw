@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>otus js hw2</title>
+</head>
+<body>
+
+<div>
+    <div>
+        <span></span>
+    </div>
+    <div>
+        <div>
+            <a></a>
+            <a></a>
+            <a></a>
+            <a></a>
+            <span id="target"></span> <!-- body > div > div:nth-child(2) > div > span:nth-child(2) -->
+            <span></span>
+        </div>
+    </div>
+    <div></div>
+    <span></span>
+
+</div>
+
+<script>
+
+    'use strict';
+
+    function getPath(node) {
+
+        let path = '';
+        let sibCounter;
+
+
+        return goUp();
+
+        function goUp() {
+
+            while (node.parentElement) {
+
+                sibCounter = 1;
+
+                let sibNodes = [];
+
+
+
+                while (node.previousElementSibling) {
+                    sibNodes.push(node.tagName);
+                    console.log(sibNodes);
+                    node = node.previousElementSibling;
+                    sibCounter++;
+                }
+
+                path = (sibCounter > 1) ?
+                    sibNodes[0] + `:nth-child(${sibCounter}) > ` + path :
+                    node.parentNode.tagName + ' > ' + path;
+
+                node = node.parentNode;
+            }
+            return path.toLowerCase();
+        }
+
+    }
+
+    let n1 = document.getElementById("target");
+
+    let path = getPath(n1);
+
+    console.log(path);
+
+
+</script>
+
+</body>
+</html>

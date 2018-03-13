@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<div>
+<div id="t1">
     <div>
         <span></span>
     </div>
@@ -14,9 +14,17 @@
         <div>
             <a></a>
             <a></a>
+            <a id="t2"></a>
             <a></a>
-            <a></a>
-            <span id="target"></span> <!-- body > div > div:nth-child(2) > div > span:nth-child(2) -->
+            <span></span>
+            <span></span>
+            <span></span>
+            <span>
+                <a href=""></a>
+                <a id="t3"></a>
+            </span>
+
+            <span></span>
             <span></span>
         </div>
     </div>
@@ -29,48 +37,71 @@
 
     'use strict';
 
+    /**
+     * Функция возвращает уникальный css-селектор элемента
+     * @param node
+     * @returns {string|*}
+     */
+
     function getPath(node) {
 
         let path = '';
-        let sibCounter;
 
+        return climb();
 
-        return goUp();
+        function climb() {
 
-        function goUp() {
+            let sibCounter; // счётчик братьев
+            let curTagName; // тэг текущей ноды
 
-            while (node.parentElement) {
+            /**
+             * проверка исключений:
+             * - у элемента есть id;
+             * - родитель элемента сразу body;
+             */
+
+            // если есть id
+            /*
+            if(node.id) {
+                return `#${node.id}`;
+            }
+            */
+
+            //@todo выделить обход sibling'ов в отдельную функцию и использовать её здесь!
+            if (node.parentNode.tagName.toLowerCase() === 'body') {
+                return `body > ${node.tagName}`;
+            }
+
+            /**
+             * пока есть родитель и это не body "собираем" узлы дерева по дороге в селектор
+             */
+            while (node.parentElement && node.parentElement.tagName.toLowerCase() !== 'body') {
 
                 sibCounter = 1;
+                curTagName = node.tagName;
 
-                let sibNodes = [];
-
-
-
+                /**
+                 * проходимся по братьям(если лни есть) до родителя, считаем сколько их
+                 */
                 while (node.previousElementSibling) {
-                    sibNodes.push(node.tagName);
-                    console.log(sibNodes);
                     node = node.previousElementSibling;
                     sibCounter++;
                 }
 
                 path = (sibCounter > 1) ?
-                    sibNodes[0] + `:nth-child(${sibCounter}) > ` + path :
-                    node.parentNode.tagName + ' > ' + path;
+                    curTagName + `:nth-child(${sibCounter}) > ` + path :
+                    curTagName + ' > ' + path;
 
                 node = node.parentNode;
-            }
-            return path.toLowerCase();
-        }
 
+            }
+            return path.toLowerCase().slice(0, -2);
+        }
     }
 
-    let n1 = document.getElementById("target");
-
-    let path = getPath(n1);
-
-    console.log(path);
-
+    console.log(getPath(document.getElementById("t1")));
+    console.log(getPath(document.getElementById("t2")));
+    console.log(getPath(document.getElementById("t3")));
 
 </script>
 

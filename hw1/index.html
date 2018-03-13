@@ -65,29 +65,41 @@
      */
 
     function createObject(protoObj) {
-        for (let index in protoObj) {
-            Object.prototype[index] = protoObj[index];
+        function NewObj() {
+            for (let index in protoObj) {
+                this.__proto__[index] = protoObj[index];
+            }
         }
-        return Object();
+
+        return new NewObj();
     }
 
     // Использую существующий метод для сравнения
     let robotWalker = Object.create(robot);
-    console.log(robotWalker);
+
     robotWalker.name = 'Walker';
     robotWalker.height = 150;
     robotWalker.weight = 40;
+    console.log(robotWalker);
 
 
     // проверка работы функции
     let robotFighter = createObject(robot);
-    console.log(robotFighter);
+
     robotFighter.name = 'Fighter';
     robotFighter.height = 300;
     robotFighter.weight = 500;
+    console.log(robotFighter);
+
+    let robotSleeper = createObject(robot);
+    robotSleeper.name = 'Z-z-z';
+    robotSleeper.height = 1;
+    robotSleeper.weight = 0.5;
 
     robotWalker.seyMyParams();
     robotFighter.seyMyParams();
+    robotSleeper.seyMyParams();
+
 
 </script>
 </body>
